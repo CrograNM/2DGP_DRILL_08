@@ -17,6 +17,13 @@ class Idle:
         elif right_up(e) or left_down(e) or start_event(e):
             boy.action = 3
             boy.face_dir = 1
+        elif time_out(e): #AutoRun에서 타이머 이벤트를 받아 들어왔을 때
+            if boy.dir == 1: #boy의 이동 방향에 따라 Idle 상태의 변수 지정
+                boy.action = 3
+                boy.face_dir = 1
+            else :
+                boy.action = 2
+                boy.face_dir = -1
 
         boy.dir = 0 # 정지 상태를 나타낸다
         boy.frame = 0
@@ -121,6 +128,7 @@ class AutoRun:
     def enter(boy, e):
         boy.dir = 1
         boy.action = 1
+        boy.start_time = get_time()
         pass
 
     @staticmethod
@@ -134,13 +142,16 @@ class AutoRun:
         else :
             boy.delayCount = 0
             boy.frame = (boy.frame + 1) % 8
-        if boy.x < 0 :
+        if boy.x - 50 < 0 : # 벽에 얼굴이 부딪힐 때, 반전
             boy.dir = 1
             boy.action = 1
-        elif boy.x > 800 :
+        elif boy.x + 50 > 800 : # 벽에 얼굴이 부딪힐 때, 반전
             boy.dir = -1
             boy.action = 0
         boy.x += boy.dir * 5
+
+        if get_time() - boy.start_time > 5:
+            boy.state_machine.add_event(('TIME_OUT', 0))
         pass
 
     @staticmethod
