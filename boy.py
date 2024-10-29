@@ -76,12 +76,12 @@ class Sleep:
             boy.image.clip_composite_draw(boy.frame * 100, boy.action * 100, 100, 100,
                                             3.141592 / 2,  # 파이/2 = 90도 회전
                                             '',  # 상하좌우 반전하지 않는다 : ''.   반전 시 : 'v', 'h'
-                                            boy.x - 25, boy.y - 25, 100, 100)
+                                            boy.x - 30, boy.y - 30, 100, 100)
         elif boy.face_dir == -1:
             boy.image.clip_composite_draw(boy.frame * 100, boy.action * 100, 100, 100,
                                           -3.141592 / 2,  # 파이/2 = 90도 회전
                                           '',  # 상하좌우 반전하지 않는다 : ''.   반전 시 : 'v', 'h'
-                                          boy.x + 25, boy.y - 25, 100, 100)
+                                          boy.x + 30, boy.y - 30, 100, 100)
 
 class Run:
     @staticmethod
@@ -159,12 +159,12 @@ class AutoRun:
     def draw(boy):
         boy.image.clip_draw(
             boy.frame * 100, boy.action * 100, 100, 100,
-            boy.x, boy.y + 25, 200, 200
+            boy.x, boy.y + 35, 200, 200
         )
 
 class Boy:
     def __init__(self):
-        self.x, self.y = 400, 90
+        self.x, self.y = 400, 85
         self.frame = 0
         self.dir = 0
         self.face_dir = 1 # face_dir 변수 추가 1:오른쪽, -1:왼쪽, 초기 상태 : 오른쪽
