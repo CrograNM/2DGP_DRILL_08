@@ -112,8 +112,14 @@ class Run:
         else :
             boy.delayCount = 0
             boy.frame = (boy.frame + 1) % 8
-        boy.x += boy.dir * 5
-        pass
+
+        if 0 + 25 <= boy.x <= 800 - 25  :
+            boy.x += boy.dir * 5
+
+        if boy.x < 0 + 25: # 소년이 벽에 닿으면 더 이상 이동 x
+            boy.x = 0 + 25
+        elif boy.x > 800 - 25: # 소년이 벽에 닿으면 더 이상 이동 x
+            boy.x = 800 - 25
 
     @staticmethod
     def draw(boy):
