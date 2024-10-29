@@ -1,3 +1,4 @@
+# 2021184033 조성욱
 from pico2d import *
 
 from boy import Boy
