@@ -1,13 +1,12 @@
 #이벤트 체크 함수를 정의
 #상태 이벤트 e = (종류, 실제값) 튜플로 정의
-from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_RIGHT, SDLK_LEFT
+from sdl2 import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_RIGHT, SDLK_LEFT, SDLK_a
+
 
 def start_event(e):
     return e[0] == 'START'
-
 def space_down(e): # e가 spaceDown인지 판단? True/False
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
-
 def time_out(e): # e가 timeOut인지 판단?
     return e[0] == 'TIME_OUT' # 상태가 변하지 않으면 이 '종류 문자열'을 자세히 검사하기...
 
@@ -19,6 +18,9 @@ def left_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LEFT
 def left_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
+
+def a_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and (e[1].key == SDLK_a)
 
 class StateMachine:
     def __init__(self, obj):

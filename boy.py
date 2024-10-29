@@ -1,6 +1,6 @@
 from pico2d import load_image, get_time
 
-from state_machine import time_out, space_down, right_down, right_up, left_down, left_up, start_event
+from state_machine import time_out, space_down, right_down, right_up, left_down, left_up, start_event, a_down
 from state_machine import StateMachine
 
 class Idle:
@@ -148,7 +148,7 @@ class AutoRun:
         elif boy.x + 50 > 800 : # 벽에 얼굴이 부딪힐 때, 반전
             boy.dir = -1
             boy.action = 0
-        boy.x += boy.dir * 5
+        boy.x += boy.dir * 10
 
         if get_time() - boy.start_time > 5:
             boy.state_machine.add_event(('TIME_OUT', 0))
@@ -171,13 +171,13 @@ class Boy:
         self.delayCount = 0
         self.image = load_image('animation_sheet.png')
         self.state_machine = StateMachine(self) # 소년 객체의 state machine 생성, self 인자로 생성자의 파라미터들도 스테이트 머신에 넘겨준다.
-        self.state_machine.start(AutoRun) # 초기 상태가 idle, 스테이트 머신이 최초에 idle을 처리하게된다.
+        self.state_machine.start(Idle) # 초기 상태가 idle, 스테이트 머신이 최초에 idle을 처리하게된다.
         self.state_machine.set_transitions(
             {   #상태 변환 테이블 : 더블 Dict로 구현
                 #Run : {}, #{}:Run 상태에서 어떤 이벤트가 들어와도 처리하지 않겠다.
                 AutoRun: {time_out : Idle},
-                Idle : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, time_out : Sleep },
-                Run : {right_down : Idle, left_down : Idle, right_up : Idle, left_up : Idle},
+                Idle : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, time_out : Sleep, a_down : AutoRun },
+                Run : {right_down : Idle, left_down : Idle, right_up : Idle, left_up : Idle },
                 Sleep : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, space_down : Idle }
             }
         )
