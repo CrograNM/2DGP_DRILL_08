@@ -1,7 +1,6 @@
 from pico2d import load_image, get_time
 
 from state_machine import time_out, space_down, right_down, right_up, left_down, left_up, start_event
-# from Labs.Lecture10_Character_Controller_1.control_boy import handle_events
 from state_machine import StateMachine
 
 class Idle:
