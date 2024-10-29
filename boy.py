@@ -176,7 +176,7 @@ class Boy:
         self.state_machine.set_transitions(
             {   #상태 변환 테이블 : 더블 Dict로 구현
                 #Run : {}, #{}:Run 상태에서 어떤 이벤트가 들어와도 처리하지 않겠다.
-                AutoRun: {time_out : Idle},
+                AutoRun: {right_down : Run, left_down : Run, right_up : Run, left_up : Run, time_out : Idle}, # AR상태에서 타임아웃 + 방향키 처리,
                 Idle : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, time_out : Sleep, a_down : AutoRun },
                 Run : {right_down : Idle, left_down : Idle, right_up : Idle, left_up : Idle },
                 Sleep : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, space_down : Idle }
