@@ -3,10 +3,8 @@ from pico2d import *
 from boy import Boy
 from grass import Grass
 
-
 # Game object class here
 # class 드래그 후 우클릭 -> 리팩터링(이동)
-
 
 def handle_events():
     global running
@@ -20,7 +18,6 @@ def handle_events():
         else:
             if event.type in (SDL_KEYDOWN, SDL_KEYUP) : # 키보드 이벤트 외에 제거
                 boy.handle_event(event)
-
 
 def reset_world():
     global running
@@ -38,13 +35,9 @@ def reset_world():
     boy = Boy()
     world.append(boy)
 
-
-
 def update_world():
     for o in world:
         o.update()
-    pass
-
 
 def render_world():
     clear_canvas()
@@ -52,9 +45,9 @@ def render_world():
         o.draw()
     update_canvas()
 
-
 open_canvas()
 reset_world()
+
 # game loop
 while running:
     handle_events()

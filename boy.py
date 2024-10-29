@@ -29,7 +29,6 @@ class Idle:
         boy.frame = 0
         # 현재 시각을 저장(idle이 시작된 시점)
         boy.start_time = get_time()
-        pass
 
     @staticmethod
     def exit(boy, e):
@@ -44,12 +43,10 @@ class Idle:
             boy.frame = (boy.frame + 1) % 8
         if get_time() - boy.start_time > 3:
             boy.state_machine.add_event(('TIME_OUT', 0))
-        pass
 
     @staticmethod
     def draw(boy):
         boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y)
-        pass
     # entry, exit, do, draw -> 4가지 정보로 상태state를 표현
     # Idle이란 클래스는 그저 4개의 함수로 이루어져 있는 '상태'이다.
 
@@ -60,7 +57,6 @@ class Sleep:
             boy.face_dir = 1
             boy.action = 3
         boy.frame = 0
-        pass
 
     @staticmethod
     def exit(boy, e):
@@ -73,7 +69,6 @@ class Sleep:
         else:
             boy.delayCount = 0
             boy.frame = (boy.frame + 1) % 8
-        pass
 
     @staticmethod
     def draw(boy):
@@ -87,7 +82,6 @@ class Sleep:
                                           -3.141592 / 2,  # 파이/2 = 90도 회전
                                           '',  # 상하좌우 반전하지 않는다 : ''.   반전 시 : 'v', 'h'
                                           boy.x + 25, boy.y - 25, 100, 100)
-        pass
 
 class Run:
     @staticmethod
@@ -99,7 +93,6 @@ class Run:
             boy.dir = -1
             boy.action = 0
         boy.frame = 0
-        pass
 
     @staticmethod
     def exit(boy, e):
@@ -127,7 +120,6 @@ class Run:
             boy.frame*100, boy.action*100, 100, 100,
             boy.x,boy.y
         )
-        pass
 
 class AutoRun:
     @staticmethod
@@ -140,7 +132,6 @@ class AutoRun:
             boy.dir = -1
             boy.action = 0
         boy.start_time = get_time()
-        pass
 
     @staticmethod
     def exit(boy, e):
@@ -163,7 +154,6 @@ class AutoRun:
 
         if get_time() - boy.start_time > 5:
             boy.state_machine.add_event(('TIME_OUT', 0))
-        pass
 
     @staticmethod
     def draw(boy):
@@ -171,7 +161,6 @@ class AutoRun:
             boy.frame * 100, boy.action * 100, 100, 100,
             boy.x, boy.y + 25, 200, 200
         )
-        pass
 
 class Boy:
     def __init__(self):
@@ -193,6 +182,7 @@ class Boy:
                 Sleep : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, space_down : Idle }
             }
         )
+
     def update(self):
         self.state_machine.update() # 스테이트 머신이 업데이트를 담당하게 된다.
         #self.frame = (self.frame + 1) % 8 # 이제 이건 필요가 없음
@@ -204,7 +194,6 @@ class Boy:
         self.state_machine.add_event(
             ('INPUT', event)
         )
-        pass
 
     def draw(self):
         self.state_machine.draw()
