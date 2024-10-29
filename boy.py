@@ -126,8 +126,13 @@ class Run:
 class AutoRun:
     @staticmethod
     def enter(boy, e):
-        boy.dir = 1
-        boy.action = 1
+        #idle상태에서 a를 누를 때, idle의 방향과 같은 방향으로 시작
+        if boy.face_dir == 1:
+            boy.dir = 1
+            boy.action = 1
+        else :
+            boy.dir = -1
+            boy.action = 0
         boy.start_time = get_time()
         pass
 
@@ -167,6 +172,7 @@ class Boy:
         self.x, self.y = 400, 90
         self.frame = 0
         self.dir = 0
+        self.face_dir = 1 # face_dir 변수 추가 1:오른쪽, -1:왼쪽, 초기 상태 : 오른쪽
         self.action = 3
         self.delayCount = 0
         self.image = load_image('animation_sheet.png')
