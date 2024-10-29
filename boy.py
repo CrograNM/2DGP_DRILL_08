@@ -119,6 +119,8 @@ class Run:
 class AutoRun:
     @staticmethod
     def enter(boy, e):
+        boy.dir = 1
+        boy.action = 1
         pass
 
     @staticmethod
@@ -127,10 +129,26 @@ class AutoRun:
 
     @staticmethod
     def do(boy):
+        if boy.delayCount < 5:
+            boy.delayCount += 1
+        else :
+            boy.delayCount = 0
+            boy.frame = (boy.frame + 1) % 8
+        if boy.x < 0 :
+            boy.dir = 1
+            boy.action = 1
+        elif boy.x > 800 :
+            boy.dir = -1
+            boy.action = 0
+        boy.x += boy.dir * 5
         pass
 
     @staticmethod
     def draw(boy):
+        boy.image.clip_draw(
+            boy.frame * 100, boy.action * 100, 100, 100,
+            boy.x, boy.y + 25, 200, 200
+        )
         pass
 
 class Boy:
@@ -142,10 +160,11 @@ class Boy:
         self.delayCount = 0
         self.image = load_image('animation_sheet.png')
         self.state_machine = StateMachine(self) # 소년 객체의 state machine 생성, self 인자로 생성자의 파라미터들도 스테이트 머신에 넘겨준다.
-        self.state_machine.start(Idle) # 초기 상태가 idle, 스테이트 머신이 최초에 idle을 처리하게된다.
+        self.state_machine.start(AutoRun) # 초기 상태가 idle, 스테이트 머신이 최초에 idle을 처리하게된다.
         self.state_machine.set_transitions(
             {   #상태 변환 테이블 : 더블 Dict로 구현
                 #Run : {}, #{}:Run 상태에서 어떤 이벤트가 들어와도 처리하지 않겠다.
+                AutoRun: {time_out : Idle},
                 Idle : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, time_out : Sleep },
                 Run : {right_down : Idle, left_down : Idle, right_up : Idle, left_up : Idle},
                 Sleep : {right_down : Run, left_down : Run, right_up : Run, left_up : Run, space_down : Idle }
